@@ -91,13 +91,13 @@ describe("insert", () => {
   });
 
   test("does not insert duplicate value", () => {
-    const testTree = new Tree([1, 2, 3]);
-    testTree.insert(2);
-    expect(testTree.root.data).toBe(2);
-    expect(testTree.root.left.data).toBe(1);
-    expect(testTree.root.right.data).toBe(3);
-    expect(testTree.root.left.left).toBeNull();
-    expect(testTree.root.left.right).toBeNull();
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    const before = JSON.stringify(testTree.root);
+    testTree.insert(3);
+    expect(JSON.stringify(testTree.root)).toBe(before);
+    expect(testTree.includes(3)).toBe(true);
+    expect(testTree.includes(1)).toBe(true);
+    expect(testTree.includes(5)).toBe(true);
   });
 
   test("inserts multiple values sequentially", () => {

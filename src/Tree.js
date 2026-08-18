@@ -26,6 +26,7 @@ class Tree {
   }
 
   _insert(value, base) {
+    if (this.includes(value)) return base;
     if (base === null) return new Node(value);
     if (value < base.data) base.left = this._insert(value, base.left);
     else if (value > base.data) base.right = this._insert(value, base.right);
