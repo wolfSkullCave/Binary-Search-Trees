@@ -6,3 +6,4 @@ let testArr = [1, 0, 8, 3, 6, 1];
 const testTree = new Tree(testArr);
 
 console.log(prettyPrint(testTree.root));
+console.log(testTree)

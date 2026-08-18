@@ -21,4 +21,10 @@ describe("Tree", () => {
     expect(testTree.root.right.data).toBe(5);
     expect(testTree.root.right.left.data).toBe(4);
   });
+
+  test('includes', () =>{
+    const testTree = new Tree([1,2,3,4,5])
+
+    expect(testTree.includes(3)).toEqual(true)
+  })
 });

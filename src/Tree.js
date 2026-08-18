@@ -12,6 +12,14 @@ class Tree {
   constructor(arr) {
     this.root = buildTree(arr);
   }
+
+  includes(value, base = this.root){
+    // search the tree for value and return true if the value is found
+    if(base === null) return false;
+    if(value === base.data) return true
+    if(value < base) return this.includes(value, base.left)
+    return this.includes(value, base.right)
+  }
 }
 
 function buildTree(array) {
