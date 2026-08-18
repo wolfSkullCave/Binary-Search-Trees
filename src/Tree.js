@@ -13,12 +13,23 @@ class Tree {
     this.root = buildTree(arr);
   }
 
-  includes(value, base = this.root){
+  includes(value, base = this.root) {
     // search the tree for value and return true if the value is found
-    if(base === null) return false;
-    if(value === base.data) return true
-    if(value < base) return this.includes(value, base.left)
-    return this.includes(value, base.right)
+    if (base === null) return false;
+    if (value === base.data) return true;
+    if (value < base.data) return this.includes(value, base.left);
+    return this.includes(value, base.right);
+  }
+
+  insert(value) {
+    this.root = this._insert(value, this.root);
+  }
+
+  _insert(value, base) {
+    if (base === null) return new Node(value);
+    if (value < base.data) base.left = this._insert(value, base.left);
+    else if (value > base.data) base.right = this._insert(value, base.right);
+    return base;
   }
 }
 

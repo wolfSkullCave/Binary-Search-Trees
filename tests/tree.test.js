@@ -22,9 +22,94 @@ describe("Tree", () => {
     expect(testTree.root.right.left.data).toBe(4);
   });
 
-  test('includes', () =>{
-    const testTree = new Tree([1,2,3,4,5])
+  test("returns null for empty array", () => {
+    const testTree = new Tree([]);
+    expect(testTree.root).toBeNull();
+  });
 
-    expect(testTree.includes(3)).toEqual(true)
-  })
+  test("builds single node tree", () => {
+    const testTree = new Tree([5]);
+    expect(testTree.root.data).toBe(5);
+    expect(testTree.root.left).toBeNull();
+    expect(testTree.root.right).toBeNull();
+  });
+});
+
+describe("includes", () => {
+  test("returns true for root node", () => {
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    expect(testTree.includes(3)).toBe(true);
+  });
+
+  test("returns true for leaf node", () => {
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    expect(testTree.includes(1)).toBe(true);
+    expect(testTree.includes(5)).toBe(true);
+  });
+
+  test("returns true for internal node", () => {
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    expect(testTree.includes(2)).toBe(true);
+    expect(testTree.includes(4)).toBe(true);
+  });
+
+  test("returns false for nonexistent value", () => {
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    expect(testTree.includes(6)).toBe(false);
+    expect(testTree.includes(0)).toBe(false);
+  });
+
+  test("returns false on empty tree", () => {
+    const testTree = new Tree([]);
+    expect(testTree.includes(1)).toBe(false);
+  });
+});
+
+describe("insert", () => {
+  test("inserts value to the right", () => {
+    const testTree = new Tree([1, 2, 3]);
+    testTree.insert(4);
+    expect(testTree.root.right.right.data).toBe(4);
+  });
+
+  test("inserts value to the left", () => {
+    const testTree = new Tree([3, 4, 5]);
+    testTree.insert(2);
+    expect(testTree.root.left.left.data).toBe(2);
+  });
+
+  test("inserts into empty tree", () => {
+    const testTree = new Tree([]);
+    testTree.insert(5);
+    expect(testTree.root.data).toBe(5);
+  });
+
+  test("inserts into single node tree", () => {
+    const testTree = new Tree([5]);
+    testTree.insert(3);
+    expect(testTree.root.left.data).toBe(3);
+  });
+
+  test("does not insert duplicate value", () => {
+    const testTree = new Tree([1, 2, 3]);
+    testTree.insert(2);
+    expect(testTree.root.data).toBe(2);
+    expect(testTree.root.left.data).toBe(1);
+    expect(testTree.root.right.data).toBe(3);
+    expect(testTree.root.left.left).toBeNull();
+    expect(testTree.root.left.right).toBeNull();
+  });
+
+  test("inserts multiple values sequentially", () => {
+    const testTree = new Tree([5]);
+    testTree.insert(3);
+    testTree.insert(7);
+    testTree.insert(1);
+    testTree.insert(4);
+    expect(testTree.root.data).toBe(5);
+    expect(testTree.root.left.data).toBe(3);
+    expect(testTree.root.right.data).toBe(7);
+    expect(testTree.root.left.left.data).toBe(1);
+    expect(testTree.root.left.right.data).toBe(4);
+  });
 });
