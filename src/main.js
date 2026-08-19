@@ -8,8 +8,10 @@ const testTree = new Tree(testArr);
 // console.log(prettyPrint(testTree.root));
 // console.log(testTree)
 
-testTree.insert(9)
-testTree.insert(2)
-testTree.insert(1)
+testTree.insert(9);
+testTree.insert(2);
+testTree.insert(1);
+
+testTree.deleteItem(1);
 
 console.log(prettyPrint(testTree.root));
