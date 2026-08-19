@@ -22,18 +22,18 @@ class Tree {
   }
 
   insert(value) {
-    this.root = this._insert(value, this.root);
+    this.root = this.#insert(value, this.root);
   }
 
-  _insert(value, base) {
+  #insert(value, base) {
     if (this.includes(value)) return base;
     if (base === null) return new Node(value);
-    if (value < base.data) base.left = this._insert(value, base.left);
-    else if (value > base.data) base.right = this._insert(value, base.right);
+    if (value < base.data) base.left = this.#insert(value, base.left);
+    else if (value > base.data) base.right = this.#insert(value, base.right);
     return base;
   }
 
-  _getSuccessor(curr) {
+  #getSuccessor(curr) {
     let node = curr.right;
     while (node !== null && node.left !== null) {
       node = node.left;
@@ -42,28 +42,49 @@ class Tree {
   }
 
   deleteItem(value) {
-    this.root = this._deleteItem(value);
-  }
+    let currNode = this.root;
+    let prevNode = null;
 
-  _deleteItem(value, root = this.root) {
-    if (root === null) return root;
+    while (currNode !== null) {
+      if (currNode.data === value) {
+        break;
+      }
 
-    if (root.data > value) {
-      root.left = this._deleteItem(value, root.left);
-    } else if (root.data < value) {
-      root.right = this._deleteItem(value, root.right);
-    } else {
-      // Node with 0 or 1 child
-      if (root.left === null) return root.right;
-      if (root.right === null) return root.left;
-
-      // Node with 2 children
-      const succ = this._getSuccessor(root);
-      root.data = succ.data;
-      root.right = this._deleteItem(succ.data, root.right);
+      prevNode = currNode;
+      if (currNode.data < value) currNode = currNode.right;
+      else currNode = currNode.left;
     }
-    return root;
+
+    if (currNode === null) return; // not found
+
+    // case 1: node has no children
+    if (currNode.left === null && currNode.right === null) {
+      if (prevNode === null)
+        this.root = null; // deleting root
+      else if (prevNode.left === currNode) prevNode.left = null;
+      else prevNode.right = null;
+    }
   }
+
+  // _deleteItem(value, root = this.root) {
+  //   if (root === null) return root;
+
+  //   if (root.data > value) {
+  //     root.left = this._deleteItem(value, root.left);
+  //   } else if (root.data < value) {
+  //     root.right = this._deleteItem(value, root.right);
+  //   } else {
+  //     // Node with 0 or 1 child
+  //     if (root.left === null) return root.right;
+  //     if (root.right === null) return root.left;
+
+  //     // Node with 2 children
+  //     const succ = this._getSuccessor(root);
+  //     root.data = succ.data;
+  //     root.right = this._deleteItem(succ.data, root.right);
+  //   }
+  //   return root;
+  // }
 }
 
 function buildTree(array) {
