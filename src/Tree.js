@@ -33,58 +33,42 @@ class Tree {
     return base;
   }
 
-  #getSuccessor(curr) {
-    let node = curr.right;
-    while (node !== null && node.left !== null) {
+  deleteItem(value) {
+    this.root = this.#deleteItem(value, this.root);
+  }
+
+  #deleteItem(value, node) {
+    if (node === null) return null;
+    if (value < node.data) {
+      node.left = this.#deleteItem(value, node.left);
+      return node;
+    } else if (value > node.data) {
+      node.right = this.#deleteItem(value, node.right);
+      return node;
+    } else {
+      // Found the node to delete
+
+      // Case 1: No child
+      if (!node.left && !node.right) return null;
+      // Case 2: One child
+      else if (!node.left) return node.right;
+      else if (!node.right) return node.left;
+      // Case 3: Two children
+      else {
+        let succ = this.#findMin(node.right);
+        node.data = succ.data;
+        node.right = this.#deleteItem(succ.data, node.right);
+        return node;
+      }
+    }
+  }
+
+  #findMin(node) {
+    while (node.left) {
       node = node.left;
     }
     return node;
   }
-
-  deleteItem(value) {
-    let currNode = this.root;
-    let prevNode = null;
-
-    while (currNode !== null) {
-      if (currNode.data === value) {
-        break;
-      }
-
-      prevNode = currNode;
-      if (currNode.data < value) currNode = currNode.right;
-      else currNode = currNode.left;
-    }
-
-    if (currNode === null) return; // not found
-
-    // case 1: node has no children
-    if (currNode.left === null && currNode.right === null) {
-      if (prevNode === null)
-        this.root = null; // deleting root
-      else if (prevNode.left === currNode) prevNode.left = null;
-      else prevNode.right = null;
-    }
-  }
-
-  // _deleteItem(value, root = this.root) {
-  //   if (root === null) return root;
-
-  //   if (root.data > value) {
-  //     root.left = this._deleteItem(value, root.left);
-  //   } else if (root.data < value) {
-  //     root.right = this._deleteItem(value, root.right);
-  //   } else {
-  //     // Node with 0 or 1 child
-  //     if (root.left === null) return root.right;
-  //     if (root.right === null) return root.left;
-
-  //     // Node with 2 children
-  //     const succ = this._getSuccessor(root);
-  //     root.data = succ.data;
-  //     root.right = this._deleteItem(succ.data, root.right);
-  //   }
-  //   return root;
-  // }
 }
 
 function buildTree(array) {

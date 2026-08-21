@@ -13,4 +13,5 @@ console.log(prettyPrint(testTree.root));
 
 console.log("After deletion:");
 testTree.deleteItem(0);
+testTree.deleteItem(1);
 console.log(prettyPrint(testTree.root));
