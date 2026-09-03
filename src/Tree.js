@@ -69,6 +69,49 @@ class Tree {
     }
     return node;
   }
+
+  levelOrder(root = this.root) {
+    if (root === null) return [];
+
+    // Create an empty queue for level order traversal
+    const q = [];
+    const res = [];
+
+    // Enqueue root
+    q.push(root);
+    let currLvl = 0;
+
+    while (q.length > 0) {
+      let len = q.length;
+      res.push([]); // Creates a new array for each level of the tree
+
+      for (let i = 0; i < len; i++) {
+        // Add front of queue and remove it from queue
+        let node = q.shift();
+        res[currLvl].push(node.data); // The index of the tree level. currLvl is of number type
+
+        // Enqueue left child
+        if (node.left) q.push(node.left);
+
+        // Enqueue right child
+        if (node.right) q.push(node.right);
+      }
+
+      currLvl++;
+    }
+
+    return res;
+  }
+
+  levelOrderForEach(callback = null) {
+    if (!callback) throw new Error("callback function is null");
+
+    const res = this.levelOrder();
+
+    res.forEach((element) => {
+      callback(element);
+    });
+  }
 }
 
 function buildTree(array) {
