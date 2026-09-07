@@ -70,7 +70,7 @@ class Tree {
     return node;
   }
 
-  levelOrder(root = this.root) {
+  #levelOrder(root = this.root) {
     if (root === null) return [];
 
     // Create an empty queue for level order traversal
@@ -106,11 +106,57 @@ class Tree {
   levelOrderForEach(callback = null) {
     if (!callback) throw new Error("callback function is null");
 
-    const res = this.levelOrder();
+    const res = this.#levelOrder();
 
     res.forEach((element) => {
       callback(element);
     });
+  }
+
+  #inOrder(node, res) {
+    if (node === null) return;
+
+    // Traverse the left subtree first
+    this.#inOrder(node.left, res);
+
+    // Visit the current node
+    res.push(node.data);
+
+    // Traverse the right subtree last
+    this.#inOrder(node.right, res);
+  }
+
+  inOrderForEach(callback) {
+    if (!callback) throw new Error("No callback provided");
+
+    const res = [];
+
+    this.#inOrder(this.root, res);
+
+    res.forEach(callback);
+  }
+
+  #preOrder(node, res) {
+    if (!node) return;
+
+    // visit the current node first
+    res.push(node.data);
+
+    // traverse the left subtree
+    this.#preOrder(node.left, res);
+
+    // traverse the right subtree
+    this.#preOrder(node.right, res);
+  }
+
+  preOrderForEach(callback) {
+    if (!callback) throw new Error("No callback provided");
+
+    const res = [];
+
+    this.#preOrder(this.root, res);
+
+    res.forEach(callback);
   }
 }
 

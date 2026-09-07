@@ -210,3 +210,51 @@ describe("deleteItem", () => {
     expect(testTree.root).toBeNull();
   });
 });
+
+describe("levelOrderForEach", () => {
+  test("throws error when no callback provided", () => {
+    const testTree = new Tree([1, 2, 3]);
+    expect(() => testTree.levelOrderForEach()).toThrow("callback function is null");
+  });
+
+  test("calls callback with each level's data", () => {
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    const levels = [];
+    testTree.levelOrderForEach((level) => levels.push(level));
+    expect(levels).toEqual([[3], [2, 5], [1, 4]]);
+  });
+
+  test("visits all nodes across all levels", () => {
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    const allValues = [];
+    testTree.levelOrderForEach((level) => {
+      level.forEach((val) => allValues.push(val));
+    });
+    expect(allValues).toHaveLength(5);
+    expect(allValues.sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5]);
+  });
+});
+
+describe("inOrderForEach", () => {
+  test("throws error when no callback provided", () => {
+    const testTree = new Tree([1, 2, 3]);
+    expect(() => testTree.inOrderForEach()).toThrow("No callback provided");
+  });
+
+  test("calls callback once per node in sorted order", () => {
+    const testTree = new Tree([5, 3, 7, 1, 4, 6, 8]);
+    const visited = [];
+    testTree.inOrderForEach((data) => visited.push(data));
+    expect(visited).toEqual([1, 3, 4, 5, 6, 7, 8]);
+  });
+
+  test("passes correct data values to callback", () => {
+    const testTree = new Tree([1, 2, 3]);
+    const values = [];
+    testTree.inOrderForEach((data) => values.push(data));
+    expect(values).toHaveLength(3);
+    expect(values[0]).toBe(1);
+    expect(values[1]).toBe(2);
+    expect(values[2]).toBe(3);
+  });
+});
