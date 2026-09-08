@@ -56,17 +56,17 @@ function test(item, index, array) {
   console.log("Array:", array);
 }
 
-console.log("--- print items ---");
-testTree.inOrderForEach(printItem);
-console.log("--- double items ---");
-testTree.inOrderForEach(doubleNumber);
-console.log("--- show items positions ---");
-testTree.inOrderForEach(showPos);
-console.log("--- check number ---");
-testTree.inOrderForEach(checkNumber);
-console.log("--- test ---");
-testTree.inOrderForEach(test);
-// testTree.inOrderForEach();
+// console.log("--- print items ---");
+// testTree.inOrderForEach(printItem);
+// console.log("--- double items ---");
+// testTree.inOrderForEach(doubleNumber);
+// console.log("--- show items positions ---");
+// testTree.inOrderForEach(showPos);
+// console.log("--- check number ---");
+// testTree.inOrderForEach(checkNumber);
+// console.log("--- test ---");
+// testTree.inOrderForEach(test);
+// // testTree.inOrderForEach();
 
 // preorder for each testing
 console.log("pre order print:");
