@@ -158,6 +158,28 @@ class Tree {
 
     res.forEach(callback);
   }
+
+  #postOrder(node, res) {
+    if (node === null) return;
+
+    // first traverse left subtree
+    this.#postOrder(node.left, res);
+
+    // after visiting left, traverse right subtree
+    this.#postOrder(node.right, res);
+
+    // now we visit node
+    res.push(node.data);
+  }
+
+  postOrderForEach(callback) {
+    if (!callback) throw new Error("No callback provided");
+
+    const res = [];
+    this.#postOrder(this.root, res);
+
+    res.forEach(callback);
+  }
 }
 
 function buildTree(array) {
