@@ -214,7 +214,9 @@ describe("deleteItem", () => {
 describe("levelOrderForEach", () => {
   test("throws error when no callback provided", () => {
     const testTree = new Tree([1, 2, 3]);
-    expect(() => testTree.levelOrderForEach()).toThrow("callback function is null");
+    expect(() => testTree.levelOrderForEach()).toThrow(
+      "callback function is null",
+    );
   });
 
   test("calls callback with each level's data", () => {
@@ -256,5 +258,32 @@ describe("inOrderForEach", () => {
     expect(values[0]).toBe(1);
     expect(values[1]).toBe(2);
     expect(values[2]).toBe(3);
+  });
+});
+
+describe("height", () => {
+  const tree = new Tree([1, 0, 8, 3, 6, 1]);
+  //       3
+  //      / \
+  //     1   8
+  //    /   /
+  //   0   6
+
+  test("returns height of root node", () => {
+    expect(tree.height(3)).toBe(2);
+  });
+
+  test("returns height of internal node with one child", () => {
+    expect(tree.height(1)).toBe(1);
+    expect(tree.height(8)).toBe(1);
+  });
+
+  test("returns 0 for leaf nodes", () => {
+    expect(tree.height(0)).toBe(0);
+    expect(tree.height(6)).toBe(0);
+  });
+
+  test("returns undefined for nonexistent value", () => {
+    expect(tree.height(99)).toBeUndefined();
   });
 });

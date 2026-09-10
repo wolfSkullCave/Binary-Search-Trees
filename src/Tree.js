@@ -180,6 +180,28 @@ class Tree {
 
     res.forEach(callback);
   }
+
+  #height(node = this.root) {
+    if (!node) return -1;
+
+    return 1 + Math.max(this.#height(node.left), this.#height(node.right));
+  }
+
+  #findNode(node, value) {
+    if (!node) return null;
+    if (node.data === value) return node;
+
+    let leftResult = this.#findNode(node.left, value);
+    if (leftResult) return leftResult;
+
+    return this.#findNode(node.right, value);
+  }
+
+  height(value) {
+    const node = this.#findNode(this.root, value);
+    if (!node) return undefined;
+    return this.#height(node);
+  }
 }
 
 function buildTree(array) {
