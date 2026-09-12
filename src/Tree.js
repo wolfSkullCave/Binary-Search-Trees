@@ -202,6 +202,17 @@ class Tree {
     if (!node) return undefined;
     return this.#height(node);
   }
+
+  depth(value, root = this.root, ans = 0) {
+    if (root === null) return -1;
+    if (root.data === value) return ans;
+
+    const left = this.depth(value, root.left, ans + 1);
+
+    if (left !== -1) return left;
+
+    return this.depth(value, root.right, ans + 1);
+  }
 }
 
 function buildTree(array) {

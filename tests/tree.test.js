@@ -287,3 +287,30 @@ describe("height", () => {
     expect(tree.height(99)).toBeUndefined();
   });
 });
+
+describe("depth", () => {
+  const tree = new Tree([1, 0, 8, 3, 6, 1]);
+  //       3
+  //      / \
+  //     1   8
+  //    /   /
+  //   0   6
+
+  test("returns 0 for the root node", () => {
+    expect(tree.depth(3)).toBe(0);
+  });
+
+  test("returns 1 for nodes on the first level", () => {
+    expect(tree.depth(1)).toBe(1);
+    expect(tree.depth(8)).toBe(1);
+  });
+
+  test("returns 2 for nodes on the second level", () => {
+    expect(tree.depth(0)).toBe(2);
+    expect(tree.depth(6)).toBe(2);
+  });
+
+  test("returns -1 for nonexistent value", () => {
+    expect(tree.depth(99)).toBe(-1);
+  });
+});
