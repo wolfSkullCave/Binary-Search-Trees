@@ -314,3 +314,49 @@ describe("depth", () => {
     expect(tree.depth(99)).toBe(-1);
   });
 });
+
+describe("isBalanced", () => {
+  test("returns true for empty tree", () => {
+    const testTree = new Tree([]);
+    expect(testTree.isBalanced()).toBe(true);
+  });
+
+  test("returns true for single node tree", () => {
+    const testTree = new Tree([5]);
+    expect(testTree.isBalanced()).toBe(true);
+  });
+
+  test("returns true for tree built by buildTree", () => {
+    const testTree = new Tree([1, 0, 8, 3, 6, 1]);
+    //       3
+    //      / \
+    //     1   8
+    //    /   /
+    //   0   6
+    expect(testTree.isBalanced()).toBe(true);
+  });
+
+  test("returns true when subtree heights differ by one", () => {
+    const testTree = new Tree([1, 2, 3]);
+    //      2
+    //     / \
+    //    1   3
+    expect(testTree.isBalanced()).toBe(true);
+  });
+
+  test("returns false for left-skewed tree", () => {
+    const testTree = new Tree([]);
+    testTree.insert(5);
+    testTree.insert(3);
+    testTree.insert(1);
+    expect(testTree.isBalanced()).toBe(false);
+  });
+
+  test("returns false for right-skewed tree", () => {
+    const testTree = new Tree([]);
+    for (const value of [1, 2, 3, 4, 5]) {
+      testTree.insert(value);
+    }
+    expect(testTree.isBalanced()).toBe(false);
+  });
+});
