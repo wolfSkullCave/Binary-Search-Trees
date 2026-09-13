@@ -237,7 +237,13 @@ class Tree {
     return false;
   }
 
-  rebalanced() {}
+  rebalanced() {
+    const nodes = [];
+
+    this.postOrderForEach((node) => nodes.push(node));
+
+    this.root = buildTree(nodes);
+  }
 }
 
 function buildTree(array) {

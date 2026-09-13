@@ -360,3 +360,92 @@ describe("isBalanced", () => {
     expect(testTree.isBalanced()).toBe(false);
   });
 });
+
+describe("rebalanced", () => {
+  test("balances a right-skewed tree", () => {
+    const testTree = new Tree([]);
+    for (const value of [1, 2, 3, 4, 5, 6]) {
+      testTree.insert(value);
+    }
+    expect(testTree.isBalanced()).toBe(false);
+
+    testTree.rebalanced();
+
+    expect(testTree.isBalanced()).toBe(true);
+  });
+
+  test("balances a left-skewed tree", () => {
+    const testTree = new Tree([]);
+    for (const value of [6, 5, 4, 3, 2, 1]) {
+      testTree.insert(value);
+    }
+    expect(testTree.isBalanced()).toBe(false);
+
+    testTree.rebalanced();
+
+    expect(testTree.isBalanced()).toBe(true);
+  });
+
+  test("preserves all values after rebalancing", () => {
+    const testTree = new Tree([]);
+    for (const value of [1, 2, 3, 4, 5, 6]) {
+      testTree.insert(value);
+    }
+    const values = [];
+    testTree.inOrderForEach((data) => values.push(data));
+
+    testTree.rebalanced();
+
+    const rebalancedValues = [];
+    testTree.inOrderForEach((data) => rebalancedValues.push(data));
+    expect(rebalancedValues).toEqual(values);
+  });
+
+  test("rebuilt tree is a valid BST", () => {
+    const testTree = new Tree([]);
+    for (const value of [7, 3, 1, 2, 5, 4]) {
+      testTree.insert(value);
+    }
+
+    testTree.rebalanced();
+
+    const values = [];
+    testTree.inOrderForEach((data) => values.push(data));
+    expect(values).toEqual([1, 2, 3, 4, 5, 7]);
+  });
+
+  test("uses the middle value as root", () => {
+    const testTree = new Tree([]);
+    for (const value of [1, 2, 3, 4, 5]) {
+      testTree.insert(value);
+    }
+
+    testTree.rebalanced();
+
+    expect(testTree.root.data).toBe(3);
+  });
+
+  test("leaves an already balanced tree unchanged", () => {
+    const testTree = new Tree([1, 2, 3, 4, 5]);
+    const before = JSON.stringify(testTree.root);
+
+    testTree.rebalanced();
+
+    expect(JSON.stringify(testTree.root)).toBe(before);
+  });
+
+  test("does nothing on empty tree", () => {
+    const testTree = new Tree([]);
+    expect(() => testTree.rebalanced()).not.toThrow();
+    expect(testTree.root).toBeNull();
+  });
+
+  test("single node tree is unaffected", () => {
+    const testTree = new Tree([5]);
+
+    testTree.rebalanced();
+
+    expect(testTree.isBalanced()).toBe(true);
+    expect(testTree.root.data).toBe(5);
+  });
+});
