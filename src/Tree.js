@@ -114,6 +114,8 @@ class Tree {
   }
 
   #inOrder(node, res) {
+    // Inorder traversal visits the node in the order: Left -> Root -> Right
+
     if (node === null) return;
 
     // Traverse the left subtree first
@@ -137,6 +139,8 @@ class Tree {
   }
 
   #preOrder(node, res) {
+    // Preorder traversal visits the node in the order: Root -> Left -> Right
+
     if (!node) return;
 
     // visit the current node first
@@ -160,6 +164,8 @@ class Tree {
   }
 
   #postOrder(node, res) {
+    // Postorder traversal visits the node in the order: Left -> Right -> Root
+
     if (node === null) return;
 
     // first traverse left subtree
@@ -230,6 +236,8 @@ class Tree {
 
     return false;
   }
+
+  rebalanced() {}
 }
 
 function buildTree(array) {
