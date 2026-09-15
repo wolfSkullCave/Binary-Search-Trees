@@ -70,7 +70,7 @@ class Tree {
     return node;
   }
 
-  #levelOrder(root = this.root) {
+  levelOrder(root = this.root) {
     if (root === null) return [];
 
     // Create an empty queue for level order traversal
@@ -106,26 +106,28 @@ class Tree {
   levelOrderForEach(callback = null) {
     if (!callback) throw new Error("callback function is null");
 
-    const res = this.#levelOrder();
+    const res = this.levelOrder();
 
     res.forEach((element) => {
       callback(element);
     });
   }
 
-  #inOrder(node, res) {
+  inOrder(node = this.root, res = []) {
     // Inorder traversal visits the node in the order: Left -> Root -> Right
 
-    if (node === null) return;
+    if (node === null) return res;
 
     // Traverse the left subtree first
-    this.#inOrder(node.left, res);
+    this.inOrder(node.left, res);
 
     // Visit the current node
     res.push(node.data);
 
     // Traverse the right subtree last
-    this.#inOrder(node.right, res);
+    this.inOrder(node.right, res);
+
+    return res;
   }
 
   inOrderForEach(callback) {
@@ -133,24 +135,26 @@ class Tree {
 
     const res = [];
 
-    this.#inOrder(this.root, res);
+    this.inOrder(this.root, res);
 
     res.forEach(callback);
   }
 
-  #preOrder(node, res) {
+  preOrder(node = this.root, res = []) {
     // Preorder traversal visits the node in the order: Root -> Left -> Right
 
-    if (!node) return;
+    if (!node) return res;
 
     // visit the current node first
     res.push(node.data);
 
     // traverse the left subtree
-    this.#preOrder(node.left, res);
+    this.preOrder(node.left, res);
 
     // traverse the right subtree
-    this.#preOrder(node.right, res);
+    this.preOrder(node.right, res);
+
+    return res;
   }
 
   preOrderForEach(callback) {
@@ -158,31 +162,33 @@ class Tree {
 
     const res = [];
 
-    this.#preOrder(this.root, res);
+    this.preOrder(this.root, res);
 
     res.forEach(callback);
   }
 
-  #postOrder(node, res) {
+  postOrder(node = this.root, res = []) {
     // Postorder traversal visits the node in the order: Left -> Right -> Root
 
-    if (node === null) return;
+    if (node === null) return res;
 
     // first traverse left subtree
-    this.#postOrder(node.left, res);
+    this.postOrder(node.left, res);
 
     // after visiting left, traverse right subtree
-    this.#postOrder(node.right, res);
+    this.postOrder(node.right, res);
 
     // now we visit node
     res.push(node.data);
+
+    return res;
   }
 
   postOrderForEach(callback) {
     if (!callback) throw new Error("No callback provided");
 
     const res = [];
-    this.#postOrder(this.root, res);
+    this.postOrder(this.root, res);
 
     res.forEach(callback);
   }
